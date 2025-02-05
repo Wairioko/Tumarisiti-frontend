@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
+import { Navbar } from "../../home.mjs";
 
 
 const CheckedInvoices = () => {
@@ -15,14 +16,14 @@ const CheckedInvoices = () => {
 
         const fetchInvoices = async () => {
             try {
-                const response = await axios.get(`/api/invoices?batchId=${batchId}`);
+                const response = await axios.get(`${process.env.REACT_APP_AWS_URL}/api/invoices/status?batchId=${batchId}`, {
+                    withCredentials: true,
+                });
                 setInvoices(response.data);
-
-                if (response.data.every(inv => inv.status !== "Pending")) {
-                    setLoading(false);
-                }
+                setLoading(false); 
             } catch (error) {
                 console.error("Error fetching invoices:", error);
+                setLoading(false); 
             }
         };
 
@@ -33,7 +34,9 @@ const CheckedInvoices = () => {
     }, [batchId]);
 
     return (
+        
         <div className="p-6">
+            <Navbar/>
             <h2 className="text-2xl font-bold mb-6 text-gray-800">Checked Invoices</h2>
             
             {loading && (
@@ -48,10 +51,13 @@ const CheckedInvoices = () => {
                     <thead className="bg-gray-50">
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Invoice Number
+                                Seller Name
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Seller PIN
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Invoice Number
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Amount
@@ -65,18 +71,21 @@ const CheckedInvoices = () => {
                         {invoices.map((invoice) => (
                             <tr key={invoice.invoiceNumber} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    {invoice.invoiceNumber}
+                                    {invoice.sellerName}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {invoice.sellerPin}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    {invoice.invoiceNumber}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {invoice.invoiceAmount}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm">
-                                    {invoice.status === "Submitted" ? (
+                                    {invoice.status === "Transmitted" ? (
                                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            ✅ Submitted
+                                            ✅ Transmitted
                                         </span>
                                     ) : (
                                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
@@ -93,4 +102,6 @@ const CheckedInvoices = () => {
     );
 };
 
+
 export default CheckedInvoices;
+
