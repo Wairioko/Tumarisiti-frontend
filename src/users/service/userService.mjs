@@ -1,13 +1,19 @@
-import React from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 export const userSignUp = async (userData) => {
+    const navigate = useNavigate
     try {
-        const response = await axios.post('http://localhost:4000/api/company/registration', userData);
-        if (response.status === 200) {
+        const response = await axios.post('http://localhost:4000/api/company/registration', userData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,  
+        });
+        if (response.statusCode === 200) {
             alert('User registered successfully');
-            window.location.href = '/login';
+            navigate('/login')
             return response.data;
         } else {
             alert('Registration failed');
@@ -21,21 +27,25 @@ export const userSignUp = async (userData) => {
 };
 
 
+const userLogin = async (userData) => {
+    try {
+        const response = await axios.post(
+            "http://localhost:4000/api/company/login",
+            userData,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            }
+        );
 
-
-export const userLogin = async (userData) => {
-    try{
-        const response = await axios.post('http://localhost:4000/api/company/login', userData)
-        if(response.status === 200){
-            window.location.href('/')
-        }
-        else{
-            alert('Invalid credentials')
-        }
-    }catch(error){
-        alert('An error occurred while logging in')
-        console.error(error)
+        return response; 
+    } catch (error) {
+        console.error("Error during user login:", error);
+        throw new Error("An error occurred while logging in.");
     }
-}
+};
 
-export default userLogin
+export default userLogin;
+
