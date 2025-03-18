@@ -1,19 +1,23 @@
 import React from 'react'
 import { useLoginHook } from '../hooks/userLoginHook.mjs'
+import { Navbar } from '../../home.mjs'
+
+
 
 const LoginPage = () => {
   const { KRApin, password, error, setKRApin, setPassword, LoginUser } = useLoginHook()
 
   return (
     <div>
+      <Navbar/>
       {error && <div className="error">{error}</div>}
 
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
+            className="mx-auto h-30 w-50"
+            src="/tumainvoice.png"
+            alt="TumaInvoice"
           />
           <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
             Sign in to your account
@@ -44,7 +48,7 @@ const LoginPage = () => {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <a href="/forgot/password" className="font-semibold text-indigo-600 hover:text-indigo-500">
                     Forgot password?
                   </a>
                 </div>
