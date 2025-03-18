@@ -18,9 +18,14 @@ export const fileUploadService = async (formData) => {
             alert("Success, Invoice successfully uploaded");
             return response.data; 
         }
+
     } catch (error) {
         console.error("Error while uploading invoice", error);
-        alert("Error while uploading invoice. Please try again.");
+        if(error.code === 401){
+            alert("Unauthorized. Please log in again.")
+        }else{
+            alert("Error while uploading invoice. Please try again.");
+        }
         return { error: error.response?.data?.message || 'An unknown error occurred' };
     }
 };
