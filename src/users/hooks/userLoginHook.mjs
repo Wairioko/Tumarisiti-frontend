@@ -1,22 +1,42 @@
-import userLogin from "../service/userService.mjs";
-import {useState, useEffect} from "react"
+import {useState, useContext} from "react"
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../authprovider.mjs";
+
 
 
 export const useLoginHook = () => {
     const [KRApin, setKRApin] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const { setIsAuthenticated, login } = useContext(AuthContext);
+    const navigate = useNavigate();
+    
+    
     const LoginUser = async (e) => {
         e.preventDefault();
+        setError(null);
+        setLoading(true);
+
         try {
-            const response = await userLogin(KRApin, password);
-            if (response.statusCode === 200) {
-                setError("");
-                alert("User registered successfully");
+            const userData = {
+                KRApin: KRApin.trim(),
+                password: password.trim(),
+            };
+
+            const success = await login(userData);
+
+            if (success) {
+                setIsAuthenticated(true);
+                navigate("/");
+            } else {
+                setError("Login failed. Please check your credentials.");
             }
         } catch (err) {
+            console.error("Error during login:", err);
             setError("Login failed. Please check your credentials.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -26,7 +46,7 @@ export const useLoginHook = () => {
         password,
         setPassword,
         error,
-        setError,
-        LoginUser
+        loading,
+        LoginUser,
     };
 };
