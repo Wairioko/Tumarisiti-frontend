@@ -18,9 +18,7 @@ const useUploadInvoiceFile = () => {
             const response = await fileUploadService(formData); 
     
             if (response && response.batchId) {
-                navigate(`/checked/invoices?batchId=${response.batchId}`);
-            } else {
-                console.error("Batch ID missing in response");
+                navigate(`/invoices/status?batchId=${response.batchId}`);
             }
         } catch (error) {
             console.error("Error during file upload:", error);
