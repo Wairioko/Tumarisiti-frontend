@@ -1,5 +1,6 @@
 import React from 'react';
 import useSignUpHook from '../hooks/userSignUpHook.mjs';
+import { Navbar } from '../../home.mjs';
 const SignUpPage = () => {
     const { 
         KRApin, 
@@ -16,14 +17,15 @@ const SignUpPage = () => {
 
     return (
         <div>
+            <Navbar />
             {error && <div className="error">{error}</div>}
             
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img 
-                        className="mx-auto h-10 w-auto" 
-                        src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" 
-                        alt="Your Company"
+                        className="mx-auto h-15 w-auto" 
+                        src="/tumainvoice.png" 
+                        alt="TumaInvoice"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
                         Sign up for your account
