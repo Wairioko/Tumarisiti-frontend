@@ -1,6 +1,9 @@
 import { AuthContext } from "./authprovider.mjs";
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import useUploadInvoiceFile from "./invoice/hook/useInvoicesUpload.mjs";
+import { Link } from "react-router-dom";
+
+
 
 
 
@@ -114,38 +117,99 @@ export const Navbar = () => {
           </div>
     )
 }
- 
+
+
+const hints = [
+  {
+    text: "💡 Invoice Upload: Upload a csv file of your invoices in this format ",
+    img: "/csv_upload_hint.png", 
+  },
+  {
+    text: "🔍 Invoice Checker: We check against KRA records to see if they are transmitted",
+    img: "/invoice_dashboard.png",
+  },
+  {
+    text: "🚀 VAT Payable Reduction: With the click of a button, automatically email suppliers for them to transmit your invoices",
+    img: "/complicance.png",
+  },
+]
 
 const HomePage = () => {
-    const { isAuthenticated } = useContext(AuthContext)
-    const { handleFileUpload, file, setFile, loading, setLoading} = useUploadInvoiceFile()
-    return (
-        
-          <div className="container-fluid">
-            <Navbar/>
-            <div className="flex justify-center items-center h-screen">
-              <div className="w-full max-w-md p-4 bg-white shadow-md rounded-lg">
-                <h2 className="text-xl font-bold mb-4 text-center">Upload a File</h2>
-                <form onSubmit={handleFileUpload}>
-                  <div className="mb-4">
-                    <input
-                      type="file"
-                      onChange={(e) => setFile(e.target.files[0])}
-                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
-                  >
-                    Upload
-                  </button>
-                </form>
-              </div>
+  const { isAuthenticated } = useContext(AuthContext)
+  const { handleFileUpload, file, setFile, loading, setLoading} = useUploadInvoiceFile()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [showHint, setShowHint] = useState(true)
+
+  const nextHint = () => {
+    setCurrentIndex((prev) => 
+      (prev + 1) % hints.length
+    )
+  }
+
+  const prevHint = () => {
+    setCurrentIndex((prev) => (prev -1 + hints.length) % hints.length)
+  }
+
+  return (
+      <div className="container-fluid">
+          <Navbar/>
+          
+          {/* Main content with relative positioning */}
+          <div className="relative flex justify-center items-center h-screen bg-gray-50">
+            <div className="w-full max-w-md p-4 bg-white shadow-md rounded-lg z-10">
+              <h2 className="text-xl font-bold mb-4 text-center">Upload a File</h2>
+              <form onSubmit={handleFileUpload}>
+                <div className="mb-4">
+                  <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
+                >
+                  Upload
+                </button>
+              </form>
             </div>
+            
+            {showHint && (
+              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-20 bg-black bg-opacity-60">
+                <div className="bg-blue-100 border-l-4 border-yellow-500 p-8 rounded-lg w-4/5 max-w-4xl mx-4 relative">
+                  <img 
+                    src={hints[currentIndex].img} 
+                    alt="Hint Image" 
+                    className="w-full h-96 object-cover rounded-md mb-5"
+                  />
+                  <p className="text-yellow-700 text-xl">{hints[currentIndex].text}</p>
+                  <button 
+                    onClick={prevHint} 
+                    className="absolute left-6 top-1/2 transform -translate-y-1/2 text-yellow-700 hover:text-yellow-900 text-2xl font-bold"
+                  >
+                    ◀
+                  </button>
+                  <button 
+                    onClick={nextHint} 
+                    className="absolute right-6 top-1/2 transform -translate-y-1/2 text-yellow-700 hover:text-yellow-900 text-2xl font-bold"
+                  >
+                    ▶
+                  </button>
+                  <button 
+                    onClick={() => setShowHint(false)} 
+                    className="absolute top-4 right-4 text-yellow-700 hover:text-yellow-900 text-2xl"
+                  >
+                    ✖
+                  </button>
+                </div>
+              </div>
+            )}
+
+
           </div>
-        
-    );
+      </div>
+  );
 }
 
 export default HomePage;
