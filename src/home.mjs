@@ -43,10 +43,13 @@ export const Navbar = () => {
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex shrink-5 items-center">
                     <img
+                      href='/'
                       className="h-8 w-auto"
                       src= '/tumainvoice.png'
                       alt="TumaInvoice"
+                    
                     />
+                    
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
@@ -98,6 +101,12 @@ export const Navbar = () => {
                     </div>
                   ) : (
                     <div className="ml-4 flex space-x-4">
+                      <div>
+                        <button 
+                        href='/'
+                        className="rounded-md px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</button>
+
+                      </div>
                       <a
                         href="#"
                         className="rounded-md px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
