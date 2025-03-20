@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# Tumarisiti Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+Tumarisiti is a MERN-based application that allows users to upload invoices via CSV, check their transmission status with KRA, and send automated messages to suppliers. This frontend provides an intuitive interface for managing invoices, users, and viewing dashboard analytics.
 
-In the project directory, you can run:
+## Technologies Used
 
-### `npm start`
+- **React.js** (Frontend framework)
+- **React Router** (Client-side navigation)
+- **Tailwind CSS** (Styling)
+- **Axios** (HTTP requests)
+- **JWT Authentication** (User authentication)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Setup Instructions
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Prerequisites
 
-### `npm test`
+Ensure you have the following installed:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (v16+ recommended)
+- npm or yarn
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+# Clone the repository
+git clone
+cd tumarisiti-frontend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Install dependencies
+npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Configure environment variables
+cp .env.example .env
+nano .env  # Edit and update necessary values
 
-### `npm run eject`
+# Start the development server
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Project Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+/src
+ ├── /components       # Reusable UI components
+ ├── /dashboard        # Dashboard module
+ │   ├── /pages        # Dashboard-related pages
+ │   ├── /services     # API service calls for dashboard
+ │   ├── /hooks        # Custom hooks for dashboard
+ ├── /invoices         # Invoice module
+ │   ├── /pages        # Invoice-related pages
+ │   ├── /services     # API service calls for invoices
+ │   ├── /hooks        # Custom hooks for invoices
+ ├── /users            # User management module
+ │   ├── /pages        # User-related pages
+ │   ├── /services     # API service calls for users
+ │   ├── /hooks        # Custom hooks for users
+ ├── /authprovider     # Auth provider to handle authentication
+ ├── /utils            # Helper functions
+ ├── /assets           # Images and static assets
+ ├── App.js            # Main application component
+ ├── index.js          # Entry point
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Features
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **User Authentication**: Login and registration using JWT
+- **Invoice Upload**: Upload CSV files to check KRA transmission status
+- **Dashboard Analytics**: Visual representation of invoice status and other key metrics
+- **Automated Supplier Messaging**: Notify suppliers of pending transmissions
+- **User Management**: Admin can manage user accounts
+- **Sorting & Filtering**: View invoices by status, date, or supplier
 
-## Learn More
+## API Integration
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Uses **Axios** for API communication
+- Base API URL is configured in `.env` file
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Environment Variables
 
-### Code Splitting
+Ensure your `.env` file contains the necessary keys:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```env
+REACT_APP_AWS_URL=http://localhost:4000  # Backend API base URL
 
-### Analyzing the Bundle Size
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## License
 
-### Making a Progressive Web App
+```txt
+MIT License
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Author
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Charles Mungai- [charlesmungai5@gmail.com]
