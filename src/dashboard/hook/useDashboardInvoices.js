@@ -22,3 +22,4 @@ export const useDashboardInvoices = () => {
 
     return { invoices, loading };
 };
+
